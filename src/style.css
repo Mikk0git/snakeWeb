@@ -19,3 +19,12 @@
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
   }
+
+  .snakeElement{
+    background-color: rgb(34, 34, 34);
+  }
+
+  #snakeHead{
+    /* grid-column-start: 8;
+    grid-row-start: 3; */
+  }
