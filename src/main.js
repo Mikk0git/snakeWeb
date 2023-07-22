@@ -46,7 +46,7 @@ function getCoordinates(id){
     x=Number(document.getElementById(id).style["grid-column-start"])
     y=Number(document.getElementById(id).style["grid-row-start"])
     coordinates = [x,y]
-    console.log(`Coordinates = ${coordinates}`)
+    console.log(`${id} Coordinates = ${coordinates}`)
     return coordinates
 }
 
@@ -54,12 +54,31 @@ function randomNumber(max){
     return Math.floor(Math.random() * max) + 1
 }
 
+function spawnPoint(){
+    const gameMap =  document.getElementById('gameMap')
+    // Delete old point
+    gameMap.innerHTML = gameMap.innerHTML.replace(/<div id="point" style="grid-column-start: \d+; grid-row-start: \d+;"><\/div>/, '');
+
+    // Add new Point
+    gameMap.innerHTML = gameMap.innerHTML  + `<div id="point" ></div>`
+    
+    document.getElementById(`point`).style["grid-column-start"] = randomNumber(10);
+    document.getElementById(`point`).style["grid-row-start"] = randomNumber(10);
+
+    
+}
+
+
+
 async function  startGame(){
     let direction = randomNumber(4)
-    setCoordinates([1,4], "snakeHead")
+    let score = 0
+    setCoordinates([5,4], "snakeHead")
+    spawnPoint()
+
     while (alive == 1){
         await sleep(500)
-        
+
         document.addEventListener('keypress', (event) => {
             let code = event.code;
             
@@ -86,8 +105,17 @@ async function  startGame(){
         moveCell(getCoordinates('snakeHead'),'snakeHead',direction)
         
 
+        if (getCoordinates('snakeHead')[0] === getCoordinates("point")[0] 
+        && getCoordinates('snakeHead')[1] === getCoordinates("point")[1] ) {
+            console.error("Point scored")
+            score++
+            spawnPoint()
+
+        }
+
     }
     console.log("Game over")
+    console.log(`Score: ${score}`)
 
 }
 startGame()
