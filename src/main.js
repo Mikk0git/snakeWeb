@@ -1,9 +1,17 @@
+let alive = 1
 
 function setCoordinates(coordinates,id) {
     document.getElementById(id).style["grid-column-start"] = coordinates[0];
     document.getElementById(id).style["grid-row-start"] = coordinates[1];
     console.log("Coordinates set to X:"+coordinates[0]+" Y:"+coordinates[1])
+
     
+    if (coordinates[0]>10 ||
+    coordinates[1]>10 ||
+    coordinates[0]<1 ||
+    coordinates[1]<1 ){
+        return alive = 0
+    }
 }
 
 
@@ -43,13 +51,15 @@ function getCoordinates(id){
 }
 
 async function  startGame(){
-    let alive = 1
     setCoordinates([1,4], "snakeHead")
     while (alive == 1){
         await sleep(1000)
         moveCell(getCoordinates('snakeHead'),'snakeHead',3)
 
+
     }
+    console.log("Game over")
+
 }
 startGame()
 
