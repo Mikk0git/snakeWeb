@@ -5,7 +5,7 @@ function setCoordinates(coordinates,id) {
     document.getElementById(id).style["grid-row-start"] = coordinates[1];
     console.log("Coordinates set to X:"+coordinates[0]+" Y:"+coordinates[1])
 
-    
+
     if (coordinates[0]>10 ||
     coordinates[1]>10 ||
     coordinates[0]<1 ||
@@ -50,12 +50,41 @@ function getCoordinates(id){
     return coordinates
 }
 
+function randomNumber(max){
+    return Math.floor(Math.random() * max) + 1
+}
+
 async function  startGame(){
+    let direction = randomNumber(4)
     setCoordinates([1,4], "snakeHead")
     while (alive == 1){
-        await sleep(1000)
-        moveCell(getCoordinates('snakeHead'),'snakeHead',3)
+        await sleep(500)
+        
+        document.addEventListener('keypress', (event) => {
+            let code = event.code;
+            
+            switch(code){
+                case "KeyW":
+                    direction = 1
+                    
+                    break;
+                case "KeyD":
+                    direction = 2
+                    
+                    break;
+                case "KeyS":
+                    direction = 3
+                    
+                    break;
+                case "KeyA":
+                    direction = 4
+                    
+                    break;
+            }
+          }, false);
 
+        moveCell(getCoordinates('snakeHead'),'snakeHead',direction)
+        
 
     }
     console.log("Game over")
